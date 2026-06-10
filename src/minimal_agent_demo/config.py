@@ -5,7 +5,13 @@ from pathlib import Path
 import os
 
 from dotenv import load_dotenv
-from openai import OpenAI
+
+try:
+    from openai import OpenAI as _OpenAIClient
+except Exception:  # noqa: BLE001
+    _OpenAIClient = None
+
+OpenAI = _OpenAIClient
 
 
 @dataclass(frozen=True)
@@ -34,4 +40,6 @@ def make_client(settings: Settings):
     client_kwargs = {"api_key": settings.api_key}
     if settings.base_url:
         client_kwargs["base_url"] = settings.base_url
+    if OpenAI is None:
+        raise RuntimeError("openai package is not installed")
     return OpenAI(**client_kwargs)

@@ -170,7 +170,9 @@ def test_runtime_builds_client_with_base_url(tmp_path: Path, monkeypatch):
             captured.update(kwargs)
             self.chat = SimpleNamespace(completions=SimpleNamespace(create=lambda **_: None))
 
-    monkeypatch.setattr("minimal_agent_demo.config.OpenAI", FakeOpenAI)
+    import minimal_agent_demo.config as config_module
+
+    monkeypatch.setitem(config_module.__dict__, "OpenAI", FakeOpenAI)
 
     settings = Settings(
         api_key="test",
