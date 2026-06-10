@@ -1,7 +1,20 @@
 from __future__ import annotations
 
 import os
+import shutil
+import tempfile
 from pathlib import Path
+
+import pytest
+
+
+@pytest.fixture
+def tmp_path() -> Path:
+    path = Path(tempfile.mkdtemp(prefix="mini-agent-demo-", dir=str(Path.cwd() / ".pytest-tmp")))
+    try:
+        yield path
+    finally:
+        shutil.rmtree(path, ignore_errors=True)
 
 
 def pytest_configure() -> None:
