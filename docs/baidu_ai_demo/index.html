@@ -1,0 +1,1183 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>百度一见 × 百度秒哒 演示页</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-2: #0d1830;
+      --panel: rgba(14, 24, 43, 0.82);
+      --panel-strong: rgba(18, 31, 56, 0.95);
+      --line: rgba(159, 186, 255, 0.18);
+      --text: #eef4ff;
+      --muted: #a9b7d3;
+      --accent: #70d6ff;
+      --accent-2: #ffd56a;
+      --accent-3: #7ef2b0;
+      --danger: #ff7b8a;
+      --shadow: 0 28px 80px rgba(1, 5, 18, 0.48);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(112, 214, 255, 0.18), transparent 28%),
+        radial-gradient(circle at 82% 18%, rgba(126, 242, 176, 0.16), transparent 22%),
+        radial-gradient(circle at 85% 82%, rgba(255, 213, 106, 0.12), transparent 18%),
+        linear-gradient(160deg, var(--bg), var(--bg-2) 65%, #050b15 100%);
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+      background-size: 30px 30px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.58), transparent 92%);
+      opacity: 0.65;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 42px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .hero-main,
+    .hero-side,
+    .panel {
+      background: linear-gradient(180deg, rgba(19, 31, 55, 0.92), rgba(10, 18, 34, 0.88));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-main {
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -40% auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(112, 214, 255, 0.24), transparent 68%);
+      filter: blur(8px);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent-3);
+      box-shadow: 0 0 20px rgba(126, 242, 176, 0.55);
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+    }
+
+    .lead {
+      margin: 0 0 22px;
+      max-width: 58ch;
+      color: #d2dff8;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      color: #07111f;
+      background: linear-gradient(135deg, var(--accent), #9ae7ff);
+      box-shadow: 0 12px 24px rgba(112, 214, 255, 0.26);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hero-side {
+      padding: 20px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .side-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 16px 16px 14px;
+    }
+
+    .side-card h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .side-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 13px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #d9e4fb;
+      font-size: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .tag strong {
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+      margin: 0 0 12px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .panel {
+      padding: 20px;
+    }
+
+    .panel h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .panel p,
+    .panel li {
+      color: #d0ddf5;
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .quote {
+      margin: 0;
+      padding: 18px 18px 18px 20px;
+      border-left: 4px solid var(--accent);
+      background: rgba(112, 214, 255, 0.08);
+      border-radius: 16px;
+      line-height: 1.85;
+      color: #e8f5ff;
+    }
+
+    .metric {
+      display: grid;
+      gap: 6px;
+      padding: 16px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .metric .value {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .metric .delta {
+      color: var(--accent-3);
+      font-size: 12px;
+    }
+
+    .dashboard-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .chart-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .chart-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+
+    .chart-title h4 {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .chart-title span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .trend {
+      display: grid;
+      gap: 10px;
+    }
+
+    .trend-item {
+      display: grid;
+      grid-template-columns: 92px 1fr 42px;
+      gap: 10px;
+      align-items: center;
+      font-size: 12px;
+      color: #dbe7fb;
+    }
+
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-3));
+    }
+
+    .alert-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .alert-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .alert-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .alert-meta {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .alert-pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      white-space: nowrap;
+      background: rgba(112, 214, 255, 0.12);
+      color: #def5ff;
+      border: 1px solid rgba(112, 214, 255, 0.18);
+    }
+
+    .queue-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .queue-item {
+      display: grid;
+      grid-template-columns: 18px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .queue-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 16px rgba(255, 213, 106, 0.5);
+    }
+
+    .queue-item small {
+      display: block;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .demo-shell {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .prompt-box {
+      display: grid;
+      gap: 12px;
+    }
+
+    .prompt-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      resize: vertical;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      padding: 16px;
+      font: inherit;
+      line-height: 1.7;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: rgba(112, 214, 255, 0.55);
+      box-shadow: 0 0 0 4px rgba(112, 214, 255, 0.12);
+    }
+
+    .template-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tab {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      padding: 9px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.18s ease;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, rgba(112, 214, 255, 0.22), rgba(126, 242, 176, 0.18));
+      border-color: rgba(112, 214, 255, 0.45);
+      box-shadow: 0 10px 24px rgba(9, 22, 46, 0.36);
+    }
+
+    .generator-card {
+      background: linear-gradient(180deg, rgba(10, 17, 31, 0.92), rgba(17, 26, 46, 0.96));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .generator-head {
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .generator-head h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .generator-head small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+    }
+
+    .status-pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(126, 242, 176, 0.12);
+      color: #c9ffe0;
+      border: 1px solid rgba(126, 242, 176, 0.26);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .generator-body {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .mini-hero {
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+      border-radius: 20px;
+      background:
+        linear-gradient(135deg, rgba(112, 214, 255, 0.14), rgba(126, 242, 176, 0.09)),
+        rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mini-hero h4 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .mini-hero p {
+      margin: 0;
+      color: #d7e4fa;
+      line-height: 1.8;
+    }
+
+    .card-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .small-card {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      min-height: 102px;
+    }
+
+    .small-card .num {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .small-card .text {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .small-card .hint {
+      color: var(--accent-3);
+      font-size: 12px;
+    }
+
+    .workflow {
+      display: grid;
+      gap: 10px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .step .index {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #07111f;
+      background: linear-gradient(135deg, var(--accent-2), #ffe7a7);
+    }
+
+    .step h4 {
+      margin: 0 0 4px;
+      font-size: 14px;
+    }
+
+    .step p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+    }
+
+    .script-list {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .script-list li {
+      margin: 10px 0;
+      line-height: 1.75;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(255, 213, 106, 0.1);
+      color: #fff0c0;
+      border: 1px solid rgba(255, 213, 106, 0.2);
+      font-size: 12px;
+    }
+
+    .fade {
+      animation: fadeInUp 0.55s ease both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .demo-shell,
+      .footer-grid,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-3,
+      .card-row {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 20px, 1180px);
+        padding-top: 12px;
+      }
+
+      .hero-main,
+      .panel,
+      .hero-side {
+        padding: 16px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .hero-actions {
+        width: 100%;
+      }
+
+      .generator-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-main fade">
+        <div class="eyebrow"><span class="dot"></span> 百度一见 × 百度秒哒 演示页</div>
+        <h1>把 AI 能力讲给客户听，<br />也把一个小应用真的做出来。</h1>
+        <p class="lead">
+          这个页面分成两部分：上半部分是可以直接对客户讲解的“百度一见”介绍，下半部分是用“百度秒哒”思路做的一个轻量网页原型。
+          我想表达的是，AI 不只是一个概念，而是能快速落到业务场景里的工具。
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">看秒哒原型</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('talk').scrollIntoView({behavior:'smooth'})">看客户讲解</button>
+        </div>
+      </div>
+
+      <aside class="hero-side fade">
+        <div class="side-card">
+          <h3>一句话定位</h3>
+          <p>百度一见更像企业的“视觉 AI 生产力平台”，重点在看得见、识得准、能落地。</p>
+        </div>
+        <div class="side-card">
+          <h3>这次演示的作品</h3>
+          <p>一个“园区巡检看板”网页原型，模拟百度秒哒把提示词直接生成成页面的效果。</p>
+        </div>
+        <div class="tag-row">
+          <span class="tag"><strong>视觉AI</strong> 场景识别</span>
+          <span class="tag"><strong>AI生成</strong> 应用原型</span>
+          <span class="tag"><strong>企业落地</strong> 业务闭环</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>0. 企业业务总览</h2>
+        <p>这一层补充看板感和管理感，让页面更像真实系统。</p>
+      </div>
+      <div class="grid grid-4">
+        <div class="metric">
+          <div class="value">园区 A</div>
+          <div class="label">当前巡检范围</div>
+          <div class="delta">覆盖 18 个重点区域</div>
+        </div>
+        <div class="metric">
+          <div class="value">3 条</div>
+          <div class="label">当前高危告警</div>
+          <div class="delta">需要立即处理</div>
+        </div>
+        <div class="metric">
+          <div class="value">12:30</div>
+          <div class="label">最新更新时间</div>
+          <div class="delta">数据每 5 分钟刷新</div>
+        </div>
+        <div class="metric">
+          <div class="value">已联动</div>
+          <div class="label">工单处理状态</div>
+          <div class="delta">通知值班负责人</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="talk">
+      <div class="section-title">
+        <h2>1. 对客户讲解百度一见</h2>
+        <p>你可以直接照着这段话说，语气自然、重点清楚。</p>
+      </div>
+      <div class="grid grid-2">
+        <div class="panel">
+          <h3>客户讲解话术</h3>
+          <p class="quote">
+            “百度一见可以理解为一套面向企业的视觉 AI 能力底座。它不只是做图片识别，而是把摄像头、图像分析、告警判断、流程联动这些环节串起来，
+            让企业在安防、巡检、质检、门店管理、园区运营等场景里，把‘看见问题’真正变成‘及时处理问题’。”
+          </p>
+        </div>
+        <div class="panel">
+          <h3>我会重点强调的 3 个价值</h3>
+          <ol class="script-list">
+            <li>第一，帮助企业把“人工盯屏”升级成“AI 自动识别”。</li>
+            <li>第二，把识别结果接到工单、通知、复核流程里，形成业务闭环。</li>
+            <li>第三，按行业场景定制，落到具体业务，而不是停留在技术展示。</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="grid grid-3" style="margin-top:16px;">
+        <div class="metric">
+          <div class="value">看得见</div>
+          <div class="label">把视频和图片里的关键目标识别出来</div>
+          <div class="delta">多源输入 · 图像 / 视频 / 设备</div>
+        </div>
+        <div class="metric">
+          <div class="value">判得准</div>
+          <div class="label">对异常状态、合规风险、告警事件做判断</div>
+          <div class="delta">规则引擎 + 模型识别</div>
+        </div>
+        <div class="metric">
+          <div class="value">落得下</div>
+          <div class="label">联动流程、工单、通知和业务系统</div>
+          <div class="delta">闭环处置 · 可追踪</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="demo">
+      <div class="section-title">
+        <h2>2. 用百度秒哒做一个简单网页原型</h2>
+        <p>这里我做的是一个“园区巡检看板”，用来模拟 AI 应用生成工具的产出效果。</p>
+      </div>
+      <div class="demo-shell">
+        <div class="panel prompt-box">
+          <h3>输入提示词</h3>
+          <div class="prompt-label">示例提示：生成一个企业园区巡检看板，包含 KPI、告警列表、巡检流程和智能助手。</div>
+          <textarea id="prompt">生成一个企业园区巡检看板网页，风格专业、科技感强，内容包括：
+1. 今日巡检 KPI
+2. 异常告警列表
+3. 巡检流程卡片
+4. 智能助手建议
+5. 支持切换“园区 / 门店 / 工厂”三个场景</textarea>
+          <div class="template-tabs" id="tabs">
+            <button class="tab active" data-template="park">园区巡检</button>
+            <button class="tab" data-template="retail">门店巡检</button>
+            <button class="tab" data-template="factory">工厂质检</button>
+          </div>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="generate">一键生成页面</button>
+            <button class="btn btn-secondary" id="copyPrompt">复制提示词</button>
+          </div>
+          <p class="muted" id="status">当前状态：已准备好生成一个可演示的业务原型。</p>
+        </div>
+
+        <div class="generator-card">
+          <div class="generator-head">
+            <div>
+              <h3 id="appTitle">智慧园区巡检看板</h3>
+              <small id="appSubtitle">AI 自动巡检、异常告警与工单流转的一页式展示。</small>
+            </div>
+            <div class="status-pill" id="appBadge">已生成 · 园区场景</div>
+          </div>
+          <div class="generator-body">
+            <div class="mini-hero">
+              <h4 id="heroStatTitle">今日完成巡检 128 次</h4>
+              <p id="heroStatDesc">系统已自动识别 14 个异常点，并生成 9 张待处理工单，适合向企业演示“识别 -> 告警 -> 处理”的闭环。</p>
+            </div>
+
+            <div class="card-row">
+              <div class="small-card">
+                <div class="num" id="metric1">128</div>
+                <div class="text" id="metric1Text">今日巡检次数</div>
+              </div>
+              <div class="small-card">
+                <div class="num" id="metric2">14</div>
+                <div class="text" id="metric2Text">AI 识别异常</div>
+              </div>
+              <div class="small-card">
+                <div class="num" id="metric3">9</div>
+                <div class="text" id="metric3Text">待办工单</div>
+              </div>
+            </div>
+
+            <div class="workflow">
+              <div class="step">
+                <div class="index">1</div>
+                <div>
+                  <h4 id="step1Title">识别</h4>
+                  <p id="step1Text">摄像头或图片输入后，系统自动识别设备、人员与环境状态。</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="index">2</div>
+                <div>
+                  <h4 id="step2Title">判断</h4>
+                  <p id="step2Text">根据规则和模型结果判断是否存在告警、缺陷或异常。</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="index">3</div>
+                <div>
+                  <h4 id="step3Title">联动</h4>
+                  <p id="step3Text">自动生成工单、通知负责人，并留下复核记录，形成业务闭环。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="dashboard-row">
+              <div class="chart-card">
+                <div class="chart-title">
+                  <h4>本周告警趋势</h4>
+                  <span>近 7 天</span>
+                </div>
+                <div class="trend">
+                  <div class="trend-item"><span>周一</span><div class="bar"><span style="width:42%"></span></div><strong>12</strong></div>
+                  <div class="trend-item"><span>周二</span><div class="bar"><span style="width:56%"></span></div><strong>16</strong></div>
+                  <div class="trend-item"><span>周三</span><div class="bar"><span style="width:74%"></span></div><strong>21</strong></div>
+                  <div class="trend-item"><span>周四</span><div class="bar"><span style="width:63%"></span></div><strong>18</strong></div>
+                </div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-title">
+                  <h4>巡检任务列表</h4>
+                  <span>待处理 4 项</span>
+                </div>
+                <div class="queue-list">
+                  <div class="queue-item">
+                    <span class="queue-dot"></span>
+                    <div>
+                      <strong>3 号楼南侧通道巡检</strong>
+                      <small>责任人：值班主管 · 状态：待复核</small>
+                    </div>
+                    <span class="alert-pill">高优先级</span>
+                  </div>
+                  <div class="queue-item">
+                    <span class="queue-dot"></span>
+                    <div>
+                      <strong>停车区设备离线检查</strong>
+                      <small>责任人：运维工程师 · 状态：处理中</small>
+                    </div>
+                    <span class="alert-pill">处理中</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>3. 异常告警与处理闭环</h2>
+        <p>补齐告警详情、状态、负责人和处理动作，提升真实系统感。</p>
+      </div>
+      <div class="grid grid-2">
+        <div class="panel">
+          <h3>异常告警区</h3>
+          <div class="alert-list">
+            <div class="alert-item">
+              <div>
+                <strong>3 号楼南侧通道堆物</strong>
+                <div class="alert-meta">区域：园区主通道 · 风险：高 · 触发时间：12:18 · 状态：待处理</div>
+              </div>
+              <span class="alert-pill">高风险</span>
+            </div>
+            <div class="alert-item">
+              <div>
+                <strong>停车区摄像头画面离线</strong>
+                <div class="alert-meta">区域：停车场 · 风险：中 · 触发时间：12:12 · 状态：处理中</div>
+              </div>
+              <span class="alert-pill">处理中</span>
+            </div>
+            <div class="alert-item">
+              <div>
+                <strong>1 层大厅人员聚集</strong>
+                <div class="alert-meta">区域：接待大厅 · 风险：中 · 触发时间：12:05 · 状态：待复核</div>
+              </div>
+              <span class="alert-pill">待复核</span>
+            </div>
+            <div class="alert-item">
+              <div>
+                <strong>夜间异常移动轨迹</strong>
+                <div class="alert-meta">区域：东侧围栏 · 风险：高 · 触发时间：11:57 · 状态：已通知值班人员</div>
+              </div>
+              <span class="alert-pill">已通知</span>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>智能助手建议</h3>
+          <p class="quote">
+            “建议优先处理 3 号楼南侧通道堆物问题，并同步生成工单给值班负责人；
+            同时将停车区摄像头离线告警升级给运维工程师，避免巡检盲区扩大。”
+          </p>
+          <div class="queue-list" style="margin-top:14px;">
+            <div class="queue-item">
+              <span class="queue-dot"></span>
+              <div>
+                <strong>推荐处理顺序</strong>
+                <small>高风险告警优先，其次是设备异常，再处理复核类事件</small>
+              </div>
+              <span class="alert-pill">推荐</span>
+            </div>
+            <div class="queue-item">
+              <span class="queue-dot"></span>
+              <div>
+                <strong>一键生成工单</strong>
+                <small>可将告警内容、责任人和截止时间直接写入工单</small>
+              </div>
+              <span class="alert-pill">可执行</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>4. 设计思路和实现过程</h2>
+        <p>这部分你可以直接拿去回答“你是怎么做出来的”。</p>
+      </div>
+      <div class="footer-grid">
+        <div class="panel">
+          <h3>设计思路</h3>
+          <ul class="script-list">
+            <li>把“讲解”和“作品”放在同一页，方便当场边说边展示。</li>
+            <li>视觉上走深色科技风，突出 AI、企业、专业感。</li>
+            <li>内容上用“场景 + 价值 + 闭环”组织，避免只讲技术名词。</li>
+            <li>用三个场景切换，模拟秒哒可以快速生成不同业务页面的感觉。</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>实现过程</h3>
+          <ol class="script-list">
+            <li>先确定信息结构：客户讲解、网页原型、设计说明三块内容。</li>
+            <li>然后用一个单页 HTML 实现布局、样式和交互，不依赖额外框架。</li>
+            <li>最后用按钮切换不同场景数据，展示“输入提示词 -> 生成页面”的效果。</li>
+          </ol>
+          <div class="badge" style="margin-top:12px;">可直接复制成演示稿，现场打开即可讲</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const templates = {
+      park: {
+        badge: "已生成 · 园区场景",
+        title: "智慧园区巡检看板",
+        subtitle: "AI 自动巡检、异常告警与工单流转的一页式展示。",
+        heroTitle: "今日完成巡检 128 次",
+        heroDesc: "系统已自动识别 14 个异常点，并生成 9 张待处理工单，适合向企业演示“识别 -> 告警 -> 处理”的闭环。",
+        metrics: [
+          ["128", "今日巡检次数"],
+          ["14", "AI 识别异常"],
+          ["9", "待办工单"]
+        ],
+        steps: [
+          ["识别", "摄像头或图片输入后，系统自动识别设备、人员与环境状态。"],
+          ["判断", "根据规则和模型结果判断是否存在告警、缺陷或异常。"],
+          ["联动", "自动生成工单、通知负责人，并留下复核记录，形成业务闭环。"]
+        ],
+        status: "当前状态：园区巡检原型已生成，可用于客户演示。",
+      },
+      retail: {
+        badge: "已生成 · 门店场景",
+        title: "智慧门店巡检看板",
+        subtitle: "陈列合规、客流监测与异常提醒的一页式展示。",
+        heroTitle: "今日完成巡检 86 次",
+        heroDesc: "系统已识别 8 个陈列异常、4 个服务异常，并自动发送门店整改通知，适合零售业务演示。",
+        metrics: [
+          ["86", "今日巡检次数"],
+          ["8", "陈列异常"],
+          ["4", "服务异常"]
+        ],
+        steps: [
+          ["识别", "识别货架陈列、价签和客流热区，快速发现门店问题。"],
+          ["判断", "判断是否违反陈列规范、服务时长或安全要求。"],
+          ["联动", "自动同步给店长和区域经理，推动整改闭环。"]
+        ],
+        status: "当前状态：门店巡检原型已生成，可用于零售场景展示。",
+      },
+      factory: {
+        badge: "已生成 · 工厂场景",
+        title: "智能质检看板",
+        subtitle: "缺陷识别、异常分级与质检追踪的一页式展示。",
+        heroTitle: "今日完成质检 214 批",
+        heroDesc: "系统识别 17 处疑似缺陷，并自动标记高优先级复检项，适合制造业客户演示。",
+        metrics: [
+          ["214", "今日质检批次"],
+          ["17", "疑似缺陷"],
+          ["6", "高优先级复检"]
+        ],
+        steps: [
+          ["识别", "对产品外观、包装和工位画面进行自动识别。"],
+          ["判断", "根据阈值和模型结论判定是否需要复检或返工。"],
+          ["联动", "输出质检单和追踪记录，减少人工漏检。"]
+        ],
+        status: "当前状态：工厂质检原型已生成，可用于制造业演示。",
+      }
+    };
+
+    const tabs = document.getElementById("tabs");
+    const status = document.getElementById("status");
+    const title = document.getElementById("appTitle");
+    const subtitle = document.getElementById("appSubtitle");
+    const badge = document.getElementById("appBadge");
+    const heroStatTitle = document.getElementById("heroStatTitle");
+    const heroStatDesc = document.getElementById("heroStatDesc");
+    const metric1 = document.getElementById("metric1");
+    const metric2 = document.getElementById("metric2");
+    const metric3 = document.getElementById("metric3");
+    const metric1Text = document.getElementById("metric1Text");
+    const metric2Text = document.getElementById("metric2Text");
+    const metric3Text = document.getElementById("metric3Text");
+    const step1Title = document.getElementById("step1Title");
+    const step2Title = document.getElementById("step2Title");
+    const step3Title = document.getElementById("step3Title");
+    const step1Text = document.getElementById("step1Text");
+    const step2Text = document.getElementById("step2Text");
+    const step3Text = document.getElementById("step3Text");
+    const prompt = document.getElementById("prompt");
+
+    function setTemplate(key) {
+      const data = templates[key];
+      if (!data) return;
+
+      title.textContent = data.title;
+      subtitle.textContent = data.subtitle;
+      badge.textContent = data.badge;
+      heroStatTitle.textContent = data.heroTitle;
+      heroStatDesc.textContent = data.heroDesc;
+      metric1.textContent = data.metrics[0][0];
+      metric2.textContent = data.metrics[1][0];
+      metric3.textContent = data.metrics[2][0];
+      metric1Text.textContent = data.metrics[0][1];
+      metric2Text.textContent = data.metrics[1][1];
+      metric3Text.textContent = data.metrics[2][1];
+      step1Title.textContent = data.steps[0][0];
+      step2Title.textContent = data.steps[1][0];
+      step3Title.textContent = data.steps[2][0];
+      step1Text.textContent = data.steps[0][1];
+      step2Text.textContent = data.steps[1][1];
+      step3Text.textContent = data.steps[2][1];
+      status.textContent = data.status;
+
+      document.querySelectorAll(".tab").forEach((item) => {
+        item.classList.toggle("active", item.dataset.template === key);
+      });
+    }
+
+    tabs.addEventListener("click", (event) => {
+      const button = event.target.closest(".tab");
+      if (!button) return;
+      setTemplate(button.dataset.template);
+    });
+
+    document.getElementById("generate").addEventListener("click", () => {
+      const active = document.querySelector(".tab.active");
+      setTemplate(active ? active.dataset.template : "park");
+      status.textContent = "当前状态：已根据提示词生成页面结构，可继续切换场景查看差异。";
+    });
+
+    document.getElementById("copyPrompt").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(prompt.value);
+        status.textContent = "当前状态：提示词已复制，可以直接拿去演示。";
+      } catch (error) {
+        status.textContent = "当前状态：浏览器不允许复制，但你可以直接手动选中提示词。";
+      }
+    });
+
+    setTemplate("park");
+  </script>
+</body>
+</html>

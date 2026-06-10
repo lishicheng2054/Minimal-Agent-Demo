@@ -1,0 +1,28 @@
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+
+# Python cache and test artifacts
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Runtime data and logs
+data/
+*.log
+
+# Build artifacts
+build/
+dist/
+*.spec
+*.egg-info/
+src/*.egg-info/
+
+# IDE and OS files
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
